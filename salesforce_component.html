@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Design System • KMCS Component</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font: Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Salesforce Lightning Design System (for button primitives) -->
+  <link rel="stylesheet"
+        href="https://app.unpkg.com/@salesforce-ux/design-system@2.2.1/assets/styles/salesforce-lightning-design-system.min.css" />
+
+  <style>
+    :root{
+      --ink:#222;
+      --muted:#6b7280;
+      --canvas:#f6f7fb;
+      --panel:#ffffff;
+      --stroke:#e5e7eb;
+      --accent:#6c5ce7;
+      --kmcs-border:#666;
+      --gutter:16px;
+    }
+
+    /* Base */
+    body{
+      font-family:'Open Sans', Arial, sans-serif;
+      font-size:16px;
+      color:var(--ink);
+      background:var(--canvas);
+      margin:0;
+    }
+
+    .wrap{max-width:1200px;margin:0 auto;padding:32px 20px 64px;}
+
+    /* Masthead */
+    .masthead{display:flex;align-items:flex-end;gap:16px;margin-bottom:24px}
+    .brand{width:48px;height:48px;border-radius:50%;background:#10b981;color:#fff;display:grid;place-items:center;font-weight:700}
+    .title{font-size:44px;line-height:1.05;font-weight:700;letter-spacing:.2px}
+    .subtitle{color:var(--muted);margin-top:4px}
+
+    /* Grid */
+    .grid{display:grid;grid-template-columns: repeat(12, minmax(0,1fr));gap:var(--gutter);}
+    .panel{background:var(--panel);border:1px solid var(--stroke);border-radius:10px;padding:16px 16px 12px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .panel h3{margin:0 0 12px 0;font-size:18px;font-weight:700;color:var(--accent)}
+    .panel h4{margin:14px 0 8px 0;font-size:16px}
+    .panel p{margin:8px 0}
+    .panel ul{margin:8px 0 8px 20px}
+    .panel code, .panel pre{background:#0f172a10;border:1px solid #e5e7eb;border-radius:6px}
+    .panel code{padding:0 .25rem}
+    .panel pre{padding:.75rem;overflow:auto}
+
+    /* KMCS */
+    .kmcs {display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;}
+    .kmcs .card {
+      flex: 1 1 220px;
+      background-color: #fff;
+      border: 1px solid #f6f6f6;   /* your latest spec; swap to 3px #666 if desired */
+      border-radius: .1rem;
+      box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+      display: flex;
+      flex-direction: column;
+      min-width: 200px;
+      overflow:hidden;
+    }
+    .kmcs .card-header {
+      padding:.75rem 1rem;background-color:#f8f9fa;
+      border-bottom:1px solid rgba(0,0,0,.125);
+      font-weight:600;
+    }
+    .kmcs .card-body {
+      padding:1rem;flex:1 1 auto;font-size:1.25rem;line-height:1.4;
+    }
+    .kmcs .card-footer {
+      padding:.75rem 1rem;background-color:#fff;border-top:1px solid rgba(0,0,0,.125);
+      display:flex;gap:.5rem;flex-wrap:wrap;
+    }
+    .kmcs .card-body p {margin:0 0 .5rem 0}
+
+    /* Inline messages */
+    .inline-message{display:block;padding:.5rem .75rem;border-radius:4px;margin:.5rem 0;font-size:.9rem;font-weight:500}
+    .inline-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}
+    .inline-success{background:#ecfdf5;border:1px solid #a7f3d0;color:#047857}
+
+    /* Spans */
+    .span-12{grid-column:1 / -1}
+    @media (max-width:960px){.span-12{grid-column:1 / -1}}
+
+    /* =========================
+       Full-screen modal (accessible)
+       ========================= */
+    .modal{
+      position:fixed;inset:0;display:none;
+      background:rgba(15,23,42,.65); /* overlay */
+      z-index:9999;
+    }
+    .modal.open{display:block;}
+    .modal__dialog{
+      position:relative;
+      width:min(900px, 92vw);
+      height:min(88vh, 960px);
+      margin:5vh auto 0;
+      background:#fff;border-radius:12px;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+      display:flex;flex-direction:column;overflow:hidden;
+    }
+    .modal__header{
+      padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center
+    }
+    .modal__title{font-size:20px;font-weight:700;margin:0}
+    .modal__close{
+      border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;
+    }
+    .modal__body{padding:20px;overflow:auto;font-size:16px;line-height:1.5}
+    .modal__footer{padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <div class="brand">HD</div>
+      <div>
+        <div class="title">Custom Salesforce Design System</div>
+        <div class="subtitle">Component: KMCS personalization</div>
+      </div>
+    </header>
+
+    <section class="grid">
+      <!-- KMCS featured, full width -->
+      <div class="panel span-12">
+        <h3>KMCS • Personalization Component</h3>
+        <div class="kmcs" aria-label="KMCS personalization">
+
+          <!-- Customer Snapshot -->
+          <article class="card" role="region" aria-labelledby="kmcs-cust-header">
+            <header class="card-header" id="kmcs-cust-header">Customer Snapshot</header>
+            <div class="card-body">
+              <p><strong>Name:</strong> Alex Johnson</p>
+              <p><strong>Status:</strong> Platinum Member</p>
+              <p><strong>LTV:</strong> $4,820</p>
+            </div>
+            <footer class="card-footer">
+              <button class="slds-button slds-button_neutral"
+                      data-cta
+                      data-modal-title="Customer Profile"
+                      data-modal-content="<p>Profile details for Alex Johnson. Loyalty tier: Platinum. LTV: $4,820.</p>">
+                View Profile
+              </button>
+              <button class="slds-button slds-button_brand"
+                      data-cta
+                      data-modal-title="Start Chat"
+                      data-modal-content="<p>Initiate a secure chat with the customer. Connect routing to agent pool A.</p>">
+                Start Chat
+              </button>
+            </footer>
+          </article>
+
+          <!-- Next Best Action with inline info message -->
+          <article class="card" role="region" aria-labelledby="kmcs-nba-header">
+            <header class="card-header" id="kmcs-nba-header">Next Best Action</header>
+            <div class="card-body" id="kmcs-nba-body">
+              Offer 10% off appliance installation based on recent browsing and cart value.
+              <span class="inline-message inline-info">AI Suggested: based on last 3 sessions</span>
+            </div>
+            <footer class="card-footer">
+              <button class="slds-button slds-button_brand"
+                      id="kmcs-apply-offer"
+                      data-cta
+                      data-modal-title="Apply Offer"
+                      data-modal-content="<p>Apply 10% off installation. This will be recorded on the current opportunity and visible on the order review page.</p>">
+                Apply Offer
+              </button>
+              <button class="slds-button slds-button_neutral"
+                      id="kmcs-dismiss-offer"
+                      data-cta
+                      data-modal-title="Dismiss Recommendation"
+                      data-modal-content="<p>The recommendation will be dismissed and feedback will be logged to improve future suggestions.</p>">
+                Dismiss
+              </button>
+            </footer>
+          </article>
+
+          <!-- Upcoming Rewards with inline success message -->
+          <article class="card" role="region" aria-labelledby="kmcs-rewards-header">
+            <header class="card-header" id="kmcs-rewards-header">Upcoming Rewards</header>
+            <div class="card-body">
+              <p>You have <strong>500 points</strong> expiring on <strong>October 15, 2025</strong>.</p>
+              <p>Redeem for free delivery or paint supplies.</p>
+              <span class="inline-message inline-success">Congratulations! You are close to Gold tier.</span>
+            </div>
+            <footer class="card-footer">
+              <button class="slds-button slds-button_neutral"
+                      data-cta
+                      data-modal-title="Rewards"
+                      data-modal-content="<p>500 points available. Options: Free delivery coupon, $10 paint credit, or save toward Gold tier.</p>">
+                View Rewards
+              </button>
+            </footer>
+          </article>
+
+          <!-- Last Purchase -->
+          <article class="card" role="region" aria-labelledby="kmcs-last-header">
+            <header class="card-header" id="kmcs-last-header">Last Purchase</header>
+            <div class="card-body">
+              <p><strong>Order #:</strong> 123456</p>
+              <p><strong>Item:</strong> Cordless Drill Set</p>
+              <p><strong>Date:</strong> September 10, 2025</p>
+            </div>
+            <footer class="card-footer">
+              <button class="slds-button slds-button_neutral"
+                      data-cta
+                      data-modal-title="Order Details"
+                      data-modal-content="<p>Order 123456 — Cordless Drill Set. Status: Delivered. Warranty: 2 years remaining.</p>">
+                View Order
+              </button>
+              <button class="slds-button slds-button_neutral"
+                      data-cta
+                      data-modal-title="Start Return"
+                      data-modal-content="<p>Begin an RMA for Order 123456. Select item condition, pickup or drop-off, and refund destination.</p>">
+                Start Return
+              </button>
+            </footer>
+          </article>
+        </div>
+        <div id="kmcs-live" class="slds-assistive-text" aria-live="polite"></div>
+      </div>
+
+      <!-- =======================================
+           NEW: How to use this Component
+           ======================================= -->
+      <div class="panel span-12" id="how-to-use">
+        <h3>How to use this Component</h3>
+
+        <h4>Purpose</h4>
+        <p>The KMCS component presents a compact customer view with actions that open a full screen modal for details or confirmation. Use it to personalize offers, surface rewards, and provide quick account utilities without leaving the current page.</p>
+
+        <h4>Anatomy</h4>
+        <ul>
+          <li><strong>Card</strong>: header, body, and footer with CTAs.</li>
+          <li><strong>Inline message</strong>: optional info or success notice placed in the body.</li>
+          <li><strong>CTA</strong>: any button with <code>data-cta</code>, <code>data-modal-title</code>, and <code>data-modal-content</code>.</li>
+          <li><strong>Modal</strong>: single shared full screen dialog populated at runtime.</li>
+        </ul>
+
+        <h4>Quick start</h4>
+        <ol>
+          <li>Copy one or more cards into your page inside a container with class <code>kmcs</code>.</li>
+          <li>Add CTAs and give each one a clear <code>data-modal-title</code> and safe HTML in <code>data-modal-content</code>.</li>
+          <li>Keep the modal markup at the end of the body once. The script will bind to every element with <code>data-cta</code>.</li>
+        </ol>
+
+        <h4>Example CTA</h4>
+        <pre><code>&lt;button class="slds-button slds-button_brand"
+  data-cta
+  data-modal-title="Apply Offer"
+  data-modal-content="&lt;p&gt;Apply 10% off installation. Recorded on the opportunity.&lt;/p&gt;"&gt;
+  Apply Offer
+&lt;/button&gt;</code></pre>
+
+        <h4>Inline messages</h4>
+        <p>Use <code>&lt;span class="inline-message inline-info"&gt;…&lt;/span&gt;</code> for guidance and <code>inline-success</code> for positive outcomes. Place the message immediately after the related sentence to support scanning.</p>
+
+        <h4>Modal behavior</h4>
+        <ul>
+          <li>Every CTA opens the shared modal and injects title and content.</li>
+          <li>Close with the header button, the footer Close button, Escape key, or by clicking the overlay.</li>
+          <li>Focus is trapped in the dialog and returns to the triggering CTA on close.</li>
+        </ul>
+
+        <h4>Accessibility checklist</h4>
+        <ul>
+          <li>Each card uses <code>role="region"</code> with an <code>aria-labelledby</code> header.</li>
+          <li>The modal uses <code>role="dialog"</code> with <code>aria-modal="true"</code> and a unique title.</li>
+          <li>Live updates, such as applied or dismissed actions, announce through <code>aria-live</code>.</li>
+          <li>All CTAs are keyboard reachable and operate with Enter and Space.</li>
+        </ul>
+
+        <h4>Data and events</h4>
+        <p>The component does not fetch data. You own the payloads. Replace the example text with live values. For side effects, attach your handlers where shown below.</p>
+
+        <pre><code>// Example: hook into Apply and Dismiss for API calls
+document.getElementById('kmcs-apply-offer')?.addEventListener('click', () =&gt; {
+  // call your API here, then let the modal open
+});
+
+document.getElementById('kmcs-dismiss-offer')?.addEventListener('click', () =&gt; {
+  // call your API here
+});</code></pre>
+
+        <h4>Theming</h4>
+        <p>Adjust colors by overriding CSS variables in <code>:root</code>. For a stronger card border, set <code>border: 3px solid var(--kmcs-border)</code> on <code>.kmcs .card</code>.</p>
+
+        <h4>Do and Do not</h4>
+        <ul>
+          <li>Do keep card headers short and specific.</li>
+          <li>Do keep modal content brief and task focused.</li>
+          <li>Do not insert unsafe or user supplied HTML into <code>data-modal-content</code> without sanitizing it.</li>
+          <li>Do not duplicate the modal element. Use one shared modal per page.</li>
+        </ul>
+      </div>
+      <!-- End how-to panel -->
+    </section>
+  </div>
+
+  <!-- Full-screen modal -->
+  <div class="modal" id="modal-root" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal__header">
+        <h2 class="modal__title" id="modal-title">Title</h2>
+        <button class="modal__close" type="button" aria-label="Close">×</button>
+      </header>
+      <main class="modal__body" id="modal-body">
+        <!-- dynamic content -->
+      </main>
+      <footer class="modal__footer">
+        <button class="slds-button slds-button_neutral" data-modal-close>Close</button>
+        <button class="slds-button slds-button_brand">Confirm</button>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Inline messages already handled above; keep simple announcements.
+    const live = document.getElementById('kmcs-live');
+    const nbaBody = document.getElementById('kmcs-nba-body');
+
+    // Modal logic (accessible)
+    (function () {
+      const modal = document.getElementById('modal-root');
+      const dialog = modal.querySelector('.modal__dialog');
+      const titleEl = document.getElementById('modal-title');
+      const bodyEl  = document.getElementById('modal-body');
+      const closeBtn = modal.querySelector('.modal__close');
+      const closeFooter = modal.querySelector('[data-modal-close]');
+      let lastFocus = null;
+
+      function openModal(title, html, triggerEl){
+        lastFocus = triggerEl || document.activeElement;
+        titleEl.textContent = title || 'Details';
+        bodyEl.innerHTML = html || '<p>No details provided.</p>';
+        modal.classList.add('open');
+        modal.removeAttribute('aria-hidden');
+        // Focus first focusable element inside dialog
+        const focusable = dialog.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        (focusable || dialog).focus();
+        // Trap focus
+        document.addEventListener('keydown', trapTab);
+        document.addEventListener('keydown', onEsc);
+      }
+      function closeModal(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+        document.removeEventListener('keydown', trapTab);
+        document.removeEventListener('keydown', onEsc);
+        if (lastFocus) lastFocus.focus();
+      }
+      function onEsc(e){ if (e.key === 'Escape') closeModal(); }
+      function trapTab(e){
+        if (e.key !== 'Tab') return;
+        const f = dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first){ last.focus(); e.preventDefault(); }
+        else if (!e.shiftKey && document.activeElement === last){ first.focus(); e.preventDefault(); }
+      }
+      // Open on any CTA with data-cta
+      document.addEventListener('click', (e)=>{
+        const btn = e.target.closest('[data-cta]');
+        if (!btn) return;
+        const title = btn.getAttribute('data-modal-title') || btn.textContent.trim();
+        const content = btn.getAttribute('data-modal-content') || '<p>Details go here.</p>';
+        openModal(title, content, btn);
+      });
+      // Close interactions
+      closeBtn.addEventListener('click', closeModal);
+      closeFooter.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e)=>{ if (e.target === modal) closeModal(); });
+
+      // Demo live updates for NBA buttons
+      const apply = document.getElementById('kmcs-apply-offer');
+      const dismiss = document.getElementById('kmcs-dismiss-offer');
+      if (apply) apply.addEventListener('click', ()=> { nbaBody.textContent = 'Offer applied to the customer record.'; live.textContent='Next Best Action applied.'; }, { once:false });
+      if (dismiss) dismiss.addEventListener('click', ()=> { nbaBody.textContent = 'No active recommendation.'; live.textContent='Next Best Action dismissed.'; }, { once:false });
+    })();
+  </script>
+</body>
+</html>
